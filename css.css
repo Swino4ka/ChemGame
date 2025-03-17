@@ -1,0 +1,237 @@
+body {
+    font-family: "Geologica", sans-serif;
+    color: #f0f0ff;
+    background: linear-gradient(-45deg, #1b1229, #150f2b, #231746, #0f0820);
+    background-size: 400% 400%;
+    animation: gradientMove 15s ease infinite;
+    padding: 0px 30px;
+    overflow-x: hidden;
+    max-width: 900px;
+    margin: 0px auto 50px auto; 
+    box-sizing: border-box;
+}
+
+body {
+    animation: bgMove 15s ease infinite alternate;
+}
+
+/* Исправляем проблемы с модальным окном */
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: #312457;
+    padding: 30px;
+    border-radius: 12px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255,255,255,0.4);
+}
+
+.modal.active {
+    opacity: 1;
+    pointer-events: all; /* добавлено для кликабельности */
+    animation: fadeIn 0.5s forwards;
+}
+
+.modal button {
+    margin-top: 15px;
+}
+
+/* Центрируем весь текст на странице */
+body {
+    text-align: center;
+}
+
+section, .form-group {
+    text-align: center;
+}
+
+/* Выравнивание списков по центру */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px auto;
+    display: inline-block;
+    text-align: left;
+}
+
+  
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+  
+.fade-in {
+    animation: fadeIn 1s ease forwards;
+}
+  
+h1, h2 {
+    text-align: center;
+    color: #c4b5fd;
+}
+
+#targetMaterial {
+    color: #c4b5fd;
+    font-size: 70px;
+}
+  
+button {
+    padding: 12px 25px;
+    border-radius: 10px;
+    border: none;
+    background: #6246f0;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s;
+    box-shadow: 0 0 15px rgba(196,181,253,0.4);
+    width: 100%;
+    max-width: 300px;
+    display: block;
+    margin: 10px auto;
+}
+  
+button:hover {
+    transform: scale(1.1);
+}
+
+#baseMaterialsButtons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+    max-width: 800px;
+    margin: 10px auto;
+}
+
+.base-btn {
+    padding: 6px 10px;
+    margin: 0;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background: #785af0;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.base-btn:hover {
+    transform: scale(1.05);
+}
+  
+input[type="number"], select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(27,18,41,0.8);
+    border: none;
+    color: white;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 5px rgba(196,181,253,0.3);
+}
+  
+input[type="number"] {
+    width: 97.7%;
+}
+
+input:focus, select:focus {
+    outline: none;
+    box-shadow: 0 0 20px rgba(255,255,255,0.6);
+}
+  
+section {
+    background: rgba(31,25,65,0.8);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+  
+footer {
+    text-align: center;
+    padding: 15px;
+    background: rgba(27,22,55,0.8);
+    border-radius: 8px;
+}
+  
+footer a {
+    color: #c4b5fd;
+    margin: 0 6px;
+    text-decoration: none;
+}
+  
+footer a:hover {
+    color: #fff;
+}
+  
+@keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+  
+.particle {
+    position: fixed;
+    bottom: -5px;
+    width: 4px;
+    height: 4px;
+    background: white;
+    opacity: 0.7;
+    border-radius: 50%;
+    animation: float linear infinite;
+}
+  
+@keyframes float {
+    to { transform: translateY(-110vh); opacity: 0; }
+}
+  
+.ripple {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    transform: translate(-50%,-50%);
+    animation: rippleEffect 0.8s ease-out;
+    pointer-events: none;
+}
+
+.sandbox-toggle {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 18px;
+  }
+  
+  .sandbox-toggle input[type="checkbox"] {
+    transform: scale(1.5);
+    margin-right: 10px;
+  }  
+  
+@keyframes rippleEffect {
+    to { transform: scale(15); opacity: 0; }
+}
+
+section {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+  }
+  
+  section:nth-of-type(1) { animation-delay: 0.2s; }
+  section:nth-of-type(2) { animation-delay: 0.4s; }
+  section:nth-of-type(3) { animation-delay: 0.6s; }
+  section:nth-of-type(3) { animation-delay: 0.6s; }
+  section:nth-of-type(4) { animation-delay: 0.8s; }
+  section:nth-of-type(5) { animation-delay: 1s; }
