@@ -245,7 +245,7 @@ function populateBaseButtons() {
       return bases;
     }, new Set())
     .values()
-  ).sort((a, b) => a.localeCompare(b)); // Сортировка в алфавитном порядке
+  ).sort((a, b) => a.localeCompare(b));
 
   buttonsContainer.innerHTML = '';
 
@@ -319,7 +319,6 @@ function checkAllReactions() {
   } while (reactionOccurred);
 }
 
-// Модальное окно выбора препарата
 function showChooseReactionModal(materialsArray) {
   closeAllModals();
   const modal = document.createElement('div');
