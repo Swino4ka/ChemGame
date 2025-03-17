@@ -121,7 +121,7 @@ function possibleReagents(materialName, set = new Set()) {
 function updateMixtureDisplay() {
     currentMixtureElem.innerHTML = '';
     for (let reagent in currentMixture) {
-      if (currentMixture[reagent] < 0.001) continue; // пропускаем слишком малые значения
+      if (currentMixture[reagent] < 0.001) continue;
       const li = document.createElement('li');
       li.textContent = `${reagent}: ${currentMixture[reagent].toFixed(2)} u`;
       currentMixtureElem.appendChild(li);
@@ -157,15 +157,18 @@ function checkReactions() {
 function checkMixture() {
   if (sandboxCheckbox.checked) return;
 
-  const allowedReagents = possibleReagents(targetMaterialName);
-  const invalid = Object.keys(currentMixture).some(reagent => !allowedReagents.has(reagent));
-
-  if (invalid) {
-    showModal(false);
-  } else if (tryCraft(targetMaterialName)) {
+  if (currentMixture[targetMaterialName] && currentMixture[targetMaterialName] >= 1) {
     showModal(true);
+  } else {
+    const allowedReagents = possibleReagents(targetMaterialName);
+    const invalid = Object.keys(currentMixture).some(reagent => !allowedReagents.has(reagent) && reagent !== targetMaterialName);
+
+    if (invalid) {
+      showModal(false);
+    }
   }
 }
+
 
 function addMaterial(material) {
   currentMixture[material] = (currentMixture[material] || 0) + 1;
