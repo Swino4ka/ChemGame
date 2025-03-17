@@ -78,7 +78,6 @@ const materials = {
     "Эфедрин": { "Масло": 0.25, "Водород": 0.25, "Сахар": 0.25, "Диэтиламин": 0.25 }
  };
 
-// Элементы DOM
 const currentMixtureElem = document.getElementById('currentMixture');
 const targetMaterialElem = document.getElementById('targetMaterial');
 const buttonsContainer = document.getElementById('baseMaterialsButtons');
@@ -87,7 +86,6 @@ const sandboxCheckbox = document.getElementById('sandboxMode');
 let targetMaterialName;
 let currentMixture = {};
 
-// Выбор случайного препарата
 function chooseTargetMaterial() {
   if (sandboxCheckbox.checked) {
     targetMaterialElem.textContent = "🧪 Песочница";
@@ -98,7 +96,6 @@ function chooseTargetMaterial() {
   targetMaterialElem.textContent = targetMaterialName;
 }
 
-// Получение базовых реагентов (рекурсивно)
 function getBaseReagents(materialName, amount = 1, total = {}) {
   if (!materials[materialName]) {
     total[materialName] = (total[materialName] || 0) + amount;
@@ -111,7 +108,6 @@ function getBaseReagents(materialName, amount = 1, total = {}) {
   return total;
 }
 
-// Возможные базовые реагенты
 function possibleReagents(materialName, set = new Set()) {
   if (!materials[materialName]) {
     set.add(materialName);
@@ -123,7 +119,6 @@ function possibleReagents(materialName, set = new Set()) {
   return set;
 }
 
-// Обновляем отображение текущей смеси
 function updateMixtureDisplay() {
     currentMixtureElem.innerHTML = '';
     for (let reagent in currentMixture) {
@@ -134,14 +129,11 @@ function updateMixtureDisplay() {
     }
   }
   
-
-// Проверка на возможность собрать материал
 function tryCraft(materialName) {
   const requiredBases = getBaseReagents(materialName);
   return Object.entries(requiredBases).every(([reagent, qty]) => currentMixture[reagent] >= qty);
 }
 
-// Проверка на реакции и обновление смеси
 function checkReactions() {
   let reactionOccurred = false;
 
@@ -163,7 +155,6 @@ function checkReactions() {
   return false;
 }
 
-// Проверяем корректность смеси
 function checkMixture() {
   if (sandboxCheckbox.checked) return;
 
@@ -177,7 +168,6 @@ function checkMixture() {
   }
 }
 
-// Добавление выбранного материала в смесь
 function addMaterial(material) {
   currentMixture[material] = (currentMixture[material] || 0) + 1;
   checkReactions();
@@ -185,7 +175,6 @@ function addMaterial(material) {
   checkMixture();
 }
 
-// Уведомление о реакции
 /*
 function reactionNotification(product) {
   const modal = document.createElement('div');
@@ -204,7 +193,6 @@ function reactionNotification(product) {
 }
   */
 
-// Модальное окно с результатом
 function showModal(win) {
   const modal = document.createElement('div');
   modal.className = 'modal active';
@@ -222,14 +210,12 @@ function showModal(win) {
   };
 }
 
-// Сброс игры
 function resetGame() {
   currentMixture = {};
   updateMixtureDisplay();
   chooseTargetMaterial();
 }
 
-// Создание кнопок базовых материалов
 function populateBaseButtons() {
   const baseMaterials = Object.keys(materials).reduce((bases, mat) => {
     Object.keys(materials[mat]).forEach(reagent => {
@@ -254,7 +240,6 @@ function populateBaseButtons() {
   });
 }
 
-// Модалка реакции (новая функция)
 function showReactionModal(materialName) {
   const modal = document.createElement('div');
   modal.className = 'modal active';
@@ -268,13 +253,11 @@ function showReactionModal(materialName) {
   document.getElementById('continueBtn').onclick = () => modal.remove();
 }
 
-// Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
   populateBaseButtons();
   chooseTargetMaterial();
 });
 
-// Режим песочницы
 sandboxCheckbox.addEventListener('change', () => {
   resetGame();
   if (sandboxCheckbox.checked) {
@@ -282,7 +265,6 @@ sandboxCheckbox.addEventListener('change', () => {
   }
 });
 
-// Функция обновления всех реакций
 function checkAllReactions() {
   let reactionOccurred;
   do {
@@ -300,11 +282,10 @@ function checkAllReactions() {
           if (currentMixture[reagent] <= 0) delete currentMixture[reagent];
         });
 
-        // Добавляем созданный материал
         currentMixture[material] = (currentMixture[material] || 0) + 1;
         // reactionNotification(material);
         reactionOccurred = true;
-        break; // перезапускаем проверку, т.к. смесь изменилась
+        break;
       }
     }
   }
