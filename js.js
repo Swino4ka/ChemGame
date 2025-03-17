@@ -219,12 +219,15 @@ function resetGame() {
 }
 
 function populateBaseButtons() {
-  const baseMaterials = Object.keys(materials).reduce((bases, mat) => {
-    Object.keys(materials[mat]).forEach(reagent => {
-      if (!materials[reagent]) bases.add(reagent);
-    });
-    return bases;
-  }, new Set());
+  const baseMaterials = Array.from(
+    Object.keys(materials).reduce((bases, mat) => {
+      Object.keys(materials[mat]).forEach(reagent => {
+        if (!materials[reagent]) bases.add(reagent);
+      });
+      return bases;
+    }, new Set())
+    .values()
+  ).sort((a, b) => a.localeCompare(b)); // Сортировка в алфавитном порядке
 
   buttonsContainer.innerHTML = '';
 
@@ -234,13 +237,14 @@ function populateBaseButtons() {
     btn.textContent = material;
     btn.onclick = () => {
       currentMixture[material] = (currentMixture[material] || 0) + 1;
-      checkAllReactions();  // новая функция
+      checkAllReactions();
       updateMixtureDisplay();
       checkMixture();
     };
     buttonsContainer.appendChild(btn);
   });
 }
+
 
 function showReactionModal(materialName) {
   const modal = document.createElement('div');
@@ -278,7 +282,6 @@ function checkAllReactions() {
       );
 
       if (canCraft) {
-        // Убираем реагенты
         Object.keys(requiredReagents).forEach(reagent => {
           currentMixture[reagent] -= requiredReagents[reagent];
           if (currentMixture[reagent] <= 0) delete currentMixture[reagent];
