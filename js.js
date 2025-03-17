@@ -9,7 +9,7 @@ const materials = {
     "Бикаридин": { "Инапровалин": 0.5, "Углерод": 0.5 },
     "Бритвиум": { "Лацеринол": 1, "Бикаридин": 1 },
     "Бруизин": { "Бикаридин": 0.5, "Литий": 0.45, "Сахар": 0.5 },
-    "Галоперидол": { "Алюминий": 0.2, "Хлор": 0.2, "Фтор": 0.2, "Сварочное топливо": 0.2, "Йодид Калия": 0.2 },
+    "Галоперидол": { "Алюминий": 0.2, "Хлор": 0.2, "Фтор": 0.2, "Сварочное Топливо": 0.2, "Йодид Калия": 0.2 },
     "Гидроксид": { "Кислород": 0.5, "Водород": 0.5 },
     "Гидроксид Натрия": { "Гидроксид": 0.5, "Натрий": 0.5 },
     "Дезоксиэфедрин": { "Эфедрин": 0.25, "Углерод": 0.25, "Йод": 0.25, "Фосфор": 0.25 },
@@ -39,7 +39,7 @@ const materials = {
     "Маннитол": { "Водород": 0.33333, "Вода": 0.33333, "Сахар": 0.33333 },
     "Некросол": { "Кровь": 1.5, "Омнизин": 0.5, "Криоксадон": 1 },
     "Нестабильный Мутаген": { "Радий": 0.33333, "Фосфор": 0.33333, "Хлор": 0.33333 },
-    "Масло": { "Сварочное топливо": 0.33333, "Водород": 0.33333, "Углерод": 0.33333 },
+    "Масло": { "Сварочное Топливо": 0.33333, "Водород": 0.33333, "Углерод": 0.33333 },
     "Ноктюрин": { "Импедрезен": 2, "Вестин": 1 },
     "Норэпинефриновая Кислота": { "Уран": 0.5, "Эпинефрин": 0.5 },
     "Окулин": { "Соль": 0.25, "Кровь": 0.25, "Гидроксид": 0.5 },
@@ -66,7 +66,7 @@ const materials = {
     "Токсин Хартбрейкер": { "Дексалин Плюс": 0.5, "Токсин Майндбрейкер": 0.5 },
     "Транексамовая Кислота": { "Инапровалин": 0.33333, "Серная Кислота": 0.33333, "Сахар": 0.33333 },
     "Трикордразин": { "Инапровалин": 0.5, "Диловен": 0.5 },
-    "Уголь": { "Углерод": 1, "Зола": 1 },
+    "Уголь": { "Углерод": 1, "Пепел": 1 },
     "Ультраваскулярин": { "Гистамин": 1, "Плазма": 0.5 },
     "Фенол": { "Гидроксид": 0.5, "Бензол": 0.5 },
     "Фторосерная Кислота": { "Фтор": 0.25, "Водород": 0.25, "Калий": 0.25, "Серная Кислота": 0.25 },
@@ -84,6 +84,11 @@ const sandboxCheckbox = document.getElementById('sandboxMode');
 
 let targetMaterialName;
 let currentMixture = {};
+
+function closeAllModals() {
+  document.querySelectorAll('.modal.active').forEach(modal => modal.remove());
+  modalIsOpen = false;
+}
 
 function chooseTargetMaterial() {
   if (sandboxCheckbox.checked) {
@@ -208,6 +213,7 @@ function reactionNotification(product) {
   */
 
 function showModal(win) {
+  closeAllModals();
   const modal = document.createElement('div');
   modal.className = 'modal active';
   modal.innerHTML = `
@@ -259,6 +265,7 @@ function populateBaseButtons() {
 
 
 function showReactionModal(materialName) {
+  closeAllModals();
   const modal = document.createElement('div');
   modal.className = 'modal active';
   modal.innerHTML = `
@@ -285,8 +292,11 @@ sandboxCheckbox.addEventListener('change', () => {
 
 function checkAllReactions() {
   let reactionOccurred;
+
   do {
     reactionOccurred = false;
+    const craftableMaterials = [];
+
     for (let material in materials) {
       const requiredReagents = materials[material];
       const canCraft = Object.entries(requiredReagents).every(
@@ -294,21 +304,62 @@ function checkAllReactions() {
       );
 
       if (canCraft) {
-        Object.keys(requiredReagents).forEach(reagent => {
-          currentMixture[reagent] -= requiredReagents[reagent];
-          if (currentMixture[reagent] <= 0) delete currentMixture[reagent];
-        });
-
-        currentMixture[material] = (currentMixture[material] || 0) + 1;
-        // reactionNotification(material);
-        reactionOccurred = true;
-        break;
+        craftableMaterials.push(material);
       }
     }
-  }
-    while (reactionOccurred);
+
+    if (craftableMaterials.length > 1) {
+      showChooseReactionModal(craftableMaterials);
+      reactionOccurred = false;
+      return; 
+    } else if (craftableMaterials.length === 1) {
+      craftMaterial(craftableMaterials[0]);
+      reactionOccurred = true;
+    }
+  } while (reactionOccurred);
 }
 
+// Модальное окно выбора препарата
+function showChooseReactionModal(materialsArray) {
+  closeAllModals();
+  const modal = document.createElement('div');
+  modal.className = 'modal active';
+
+  const buttonsHtml = materialsArray.map(material => 
+    `<button class="choose-btn" data-material="${material}">${material}</button>`
+  ).join('');
+
+  modal.innerHTML = `
+    <div class="modal-content">
+      <h2>🧪 Выберите препарат для создания:</h2>
+      ${buttonsHtml}
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  modal.querySelectorAll('.choose-btn').forEach(btn => {
+    btn.onclick = () => {
+      const chosenMaterial = btn.getAttribute('data-material');
+      craftMaterial(chosenMaterial);
+      modal.remove();
+      checkAllReactions();
+      updateMixtureDisplay();
+      checkMixture();
+    };
+  });
+}
+
+function craftMaterial(material) {
+  const requiredReagents = materials[material];
+  Object.entries(requiredReagents).forEach(([reagent, qty]) => {
+    currentMixture[reagent] -= qty;
+    if (currentMixture[reagent] <= 0.001) delete currentMixture[reagent];
+  });
+
+  currentMixture[material] = (currentMixture[material] || 0) + 1;
+  showReactionModal(material);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   chooseTargetMaterial();
