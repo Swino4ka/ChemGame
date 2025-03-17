@@ -154,22 +154,34 @@ function checkReactions() {
   return false;
 }
 
-function checkMixture() {
-  if (sandboxCheckbox.checked) return;
+function isReagentUseful(material, target) {
+  if (material === target) return true;
+  if (!materials[target]) return false;
 
-  if (currentMixture[targetMaterialName] && currentMixture[targetMaterialName] >= 1) {
-    showModal(true);
-  } else {
-    const allowedReagents = possibleReagents(targetMaterialName);
-    const invalid = Object.keys(currentMixture).some(reagent => !allowedReagents.has(reagent) && reagent !== targetMaterialName);
-
-    if (invalid) {
-      showModal(false);
-    }
-  }
+  const components = Object.keys(materials[target]);
+  return components.some(component => isReagentUseful(material, component));
 }
 
 
+function checkMixture() {
+  if (sandboxCheckbox.checked) return;
+
+  const mixtureKeys = Object.keys(currentMixture);
+
+  if (currentMixture[targetMaterialName] >= 1) {
+    showModal(true);
+    return;
+  }
+
+  const hasInvalidReagent = Object.keys(currentMixture).some(
+    reagent => !isReagentUseful(reagent, targetMaterialName)
+  );
+
+  if (hasInvalidReagent) {
+    showModal(false);  
+  }
+}
+  
 function addMaterial(material) {
   currentMixture[material] = (currentMixture[material] || 0) + 1;
   checkReactions();
