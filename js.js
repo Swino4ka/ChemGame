@@ -74,7 +74,7 @@ const materials = {
     "Фторсурфактант": { "Углерод": 0.4, "Фтор": 0.4, "Серная Кислота": 0.2 },
     "Хлоральгидрат": { "Хлор": 3, "Этанол": 1, "Вода": 1 },
     "Эпинефрин": { "Фенол": 0.25, "Ацетон": 0.25, "Хлор": 0.25, "Гидроксид": 0.25 },
-    "Этилоксиэфедрин": { "Дезоксиэфедрин": 0.5, "Стеллибин": 0.5 },
+    "Этилоксиэфедрин": { "Дезоксиэфедрин": 0.5, "Стеллибинин": 0.5 },
     "Эфедрин": { "Масло": 0.25, "Водород": 0.25, "Сахар": 0.25, "Диэтиламин": 0.25 }
  };
 
@@ -85,6 +85,37 @@ const sandboxCheckbox = document.getElementById('sandboxMode');
 
 let targetMaterialName;
 let currentMixture = {};
+
+let score = 0;
+let bestScore = parseInt(localStorage.getItem('bestScore')) || 0;
+
+const scoreDisplay = document.getElementById('scoreDisplay');
+const bestScoreDisplay = document.getElementById('bestScoreDisplay');
+
+function updateScoreDisplay() {
+  scoreDisplay.textContent = `Счёт: ${score}`;
+  bestScoreDisplay.textContent = `Лучший счёт: ${bestScore}`;
+}
+
+function incrementScore() {
+  score += 1;
+  if (score > bestScore) {
+    bestScore = score;
+    localStorage.setItem('bestScore', bestScore);
+  }
+  updateScoreDisplay();
+}
+
+function resetScore() {
+  score = 0;
+  updateScoreDisplay();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  bestScore = parseInt(localStorage.getItem('bestScore')) || 0;
+  updateScoreDisplay();
+});
+
 
 function closeAllModals() {
   document.querySelectorAll('.modal.active').forEach(modal => modal.remove());
@@ -214,7 +245,20 @@ function reactionNotification(product) {
   */
 
 function showModal(win) {
-  closeAllModals();
+  closeAllModals(); 
+
+  if (win) {
+    score += 1;
+    if (score > bestScore) {
+      bestScore = score;
+      localStorage.setItem('bestScore', bestScore);
+    }
+  } else {
+    resetScore(); 
+  }
+
+  updateScoreDisplay();
+
   const modal = document.createElement('div');
   modal.className = 'modal active';
   modal.innerHTML = `
@@ -226,10 +270,11 @@ function showModal(win) {
   document.body.appendChild(modal);
 
   document.getElementById('continueBtn').onclick = () => {
-    modal.remove();
+    closeAllModals();
     resetGame();
   };
 }
+
 
 function resetGame() {
   currentMixture = {};
