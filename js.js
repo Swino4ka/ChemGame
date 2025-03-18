@@ -156,14 +156,14 @@ function possibleReagents(materialName, set = new Set()) {
 }
 
 function updateMixtureDisplay() {
-    currentMixtureElem.innerHTML = '';
-    for (let reagent in currentMixture) {
-      if (currentMixture[reagent] < 0.001) continue;
-      const li = document.createElement('li');
-      li.textContent = `${reagent}: ${currentMixture[reagent].toFixed(2)} u`;
-      currentMixtureElem.appendChild(li);
-    }
+  currentMixtureElem.innerHTML = '';
+  for (let reagent in currentMixture) {
+    if (currentMixture[reagent] < 0.001) continue;
+    const li = document.createElement('li');
+    li.textContent = `${reagent}: ${currentMixture[reagent].toFixed(2)} u`;
+    currentMixtureElem.appendChild(li);
   }
+}
   
 function tryCraft(materialName) {
   const requiredBases = getBaseReagents(materialName);
