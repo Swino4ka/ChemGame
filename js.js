@@ -403,7 +403,7 @@ function craftMaterial(material) {
   });
 
   currentMixture[material] = (currentMixture[material] || 0) + 1;
-  showReactionModal(material);
+  // showReactionModal(material);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
