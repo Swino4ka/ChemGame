@@ -1,4 +1,3 @@
-/* BODY STYLES */
 body {
     font-family: "Geologica", sans-serif;
     color: #f0f0ff;
@@ -25,7 +24,6 @@ h1, h2 {
     font-size: 70px;
 }
 
-/* SECTIONS */
 section, .form-group {
     text-align: center;
 }
@@ -45,7 +43,6 @@ section:nth-of-type(1) { animation-delay: 0.2s; }
 section:nth-of-type(2) { animation-delay: 0.4s; }
 section:nth-of-type(3) { animation-delay: 0.6s; }
 
-/* BUTTONS */
 button {
     padding: 12px 25px;
     border-radius: 10px;
@@ -113,7 +110,6 @@ input:focus, select:focus {
     box-shadow: 0 0 20px rgba(255,255,255,0.6);
 }
 
-/* LISTS */
 ul {
     list-style-type: none;
     padding: 0;
@@ -122,7 +118,6 @@ ul {
     text-align: left;
 }
 
-/* MODAL WINDOW */
 .modal {
     position: fixed;
     top: 0; left: 0;
@@ -174,7 +169,6 @@ footer a:hover {
     color: #fff;
 }
 
-/* SPECIAL EFFECTS & DECORATIONS */
 .particle {
     position: fixed;
     bottom: -5px;
@@ -196,7 +190,6 @@ footer a:hover {
     pointer-events: none;
 }
 
-/* SANDBOX TOGGLE */
 .sandbox-toggle {
     text-align: center;
     margin: 20px 0;
@@ -208,7 +201,6 @@ footer a:hover {
     margin-right: 10px;
 }
 
-/* ANIMATIONS & EFFECTS */
 .fade-in {
     animation: fadeIn 1s ease forwards;
 }
