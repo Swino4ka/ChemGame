@@ -134,7 +134,7 @@ ul {
 
 .modal.active {
     opacity: 1;
-    pointer-events: all; /* добавлено для кликабельности */
+    pointer-events: all; 
     animation: fadeIn 0.5s forwards;
 }
 
@@ -151,7 +151,6 @@ ul {
     margin-top: 15px;
 }
 
-/* FOOTER */
 footer {
     text-align: center;
     padding: 15px;
