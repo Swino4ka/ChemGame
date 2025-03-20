@@ -332,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
 sandboxCheckbox.addEventListener('change', () => {
   resetGame();
   if (sandboxCheckbox.checked) {
-    targetMaterialElem.textContent = "🧪 Песочница";
+    targetMaterialElem.textContent = "🧪 Песочница 🧪";
   }
 });
 
