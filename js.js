@@ -80,16 +80,15 @@ const materials = {
     "EZ-нутриенты": {"Калий": 0.333333, "Фосфор": 0.333333, "Азот": 0.333333}
  };
 
+let targetMaterialName;
+let currentMixture = {};
+let score = 0;
+let bestScore = parseInt(localStorage.getItem('bestScore')) || 0;
+
 const currentMixtureElem = document.getElementById('currentMixture');
 const targetMaterialElem = document.getElementById('targetMaterial');
 const buttonsContainer = document.getElementById('baseMaterialsButtons');
 const sandboxCheckbox = document.getElementById('sandboxMode');
-
-let targetMaterialName;
-let currentMixture = {};
-
-let score = 0;
-let bestScore = parseInt(localStorage.getItem('bestScore')) || 0;
 
 const scoreDisplay = document.getElementById('scoreDisplay');
 const bestScoreDisplay = document.getElementById('bestScoreDisplay');
