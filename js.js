@@ -89,7 +89,6 @@ const currentMixtureElem = document.getElementById('currentMixture');
 const targetMaterialElem = document.getElementById('targetMaterial');
 const buttonsContainer = document.getElementById('baseMaterialsButtons');
 const sandboxCheckbox = document.getElementById('sandboxMode');
-
 const scoreDisplay = document.getElementById('scoreDisplay');
 const bestScoreDisplay = document.getElementById('bestScoreDisplay');
 
