@@ -76,38 +76,6 @@ footer a:hover {
     color: #fff;
 }
 
-
-.base-btn {
-    padding: 6px 10px;
-    margin: 0;
-    font-size: 14px;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 6px;
-    background: #785af0;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.base-btn:hover {
-    transform: scale(1.05);
-}
-
-#baseMaterialsButtons {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 8px;
-    max-width: 800px;
-    margin: 10px auto;
-}
-
-#targetMaterial {
-    color: #c4b5fd;
-    font-size: 70px;
-}
-
 input[type="number"], select {
     width: 100%;
     padding: 10px;
@@ -134,6 +102,37 @@ ul {
     margin: 10px auto;
     display: inline-block;
     text-align: left;
+}
+
+#baseMaterialsButtons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+    max-width: 800px;
+    margin: 10px auto;
+}
+
+#targetMaterial {
+    color: #c4b5fd;
+    font-size: 70px;
+}
+
+.base-btn {
+    padding: 6px 10px;
+    margin: 0;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background: #785af0;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.base-btn:hover {
+    transform: scale(1.05);
 }
 
 .modal {
